@@ -2,9 +2,20 @@
 
 public class Result
 {
+    #region Creation
+
+    public Result(Error? error = default)
+    {
+        Error = error;
+    }
+
+    #endregion
+
     #region Implementation
 
-    public bool IsSuccess { get; } = true;
+    public Error? Error { get; }
+    public bool IsFailure => !IsSuccess;
+    public bool IsSuccess => Error is null;
 
     #endregion
 
