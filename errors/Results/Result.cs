@@ -23,5 +23,31 @@ public class Result
 
     public static Result Success() => new();
 
+    public static implicit operator Result(Error error) => new(error);
+
+    #endregion
+}
+
+public class Result<T> : Result where T : notnull
+{
+    #region Creation
+
+    public Result(T value)
+    {
+        Value = value;
+    }
+
+    #endregion
+
+    #region Implementation
+
+    public T Value { get; }
+
+    #endregion
+
+    #region Static Interface
+
+    public static implicit operator Result<T>(T value) => new(value);
+
     #endregion
 }
