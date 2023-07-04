@@ -28,9 +28,13 @@ public class Result
     #endregion
 }
 
-public class Result<T> : Result where T : notnull
+public class Result<T> : Result
 {
     #region Creation
+
+    public Result(Error error) : base(error)
+    {
+    }
 
     public Result(T value)
     {
@@ -41,12 +45,13 @@ public class Result<T> : Result where T : notnull
 
     #region Implementation
 
-    public T Value { get; }
+    public T? Value { get; }
 
     #endregion
 
     #region Static Interface
 
+    public static implicit operator Result<T>(Error error) => new(error);
     public static implicit operator Result<T>(T value) => new(value);
 
     #endregion
