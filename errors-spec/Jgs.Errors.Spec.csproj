@@ -23,4 +23,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\errors\Jgs.Errors.csproj" />
+  </ItemGroup>
+
 </Project>
