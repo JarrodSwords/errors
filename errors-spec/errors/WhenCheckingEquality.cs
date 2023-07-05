@@ -1,4 +1,4 @@
-﻿namespace Jgs.Errors.Spec;
+﻿namespace Jgs.Errors.Spec.Errors;
 
 public class WhenCheckingEquality
 {
