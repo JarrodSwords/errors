@@ -17,11 +17,16 @@ public class Result
     public bool IsFailure => !IsSuccess;
     public bool IsSuccess => Error is null;
 
+    public Result Bind(Func<Result> next) => IsSuccess ? next() : this;
+    public Result OnFailure(Func<Result> next) => Bind(next);
+    public Result OnSuccess(Func<Result> next) => Bind(next);
+
     #endregion
 
     #region Static Interface
 
     public static Result Success() => new();
+    public static Result<T> Success<T>(T value) => new(value);
 
     public static implicit operator Result(Error error) => new(error);
 
