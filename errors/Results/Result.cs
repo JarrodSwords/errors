@@ -30,6 +30,7 @@ public class Result
     public static Result Success() => new();
     public static Result<T> Success<T>(T value) => new(value);
 
+    public static implicit operator Error(Result source) => source.Error;
     public static implicit operator Result(Error error) => new(error);
 
     #endregion
@@ -60,6 +61,7 @@ public class Result<T> : Result
 
     public static implicit operator Result<T>(Error error) => new(error);
     public static implicit operator Result<T>(T value) => new(value);
+    public static implicit operator T(Result<T> source) => source.Value;
 
     #endregion
 }
