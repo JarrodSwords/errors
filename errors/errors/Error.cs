@@ -1,6 +1,4 @@
-﻿using Jgs.ValueObjects;
-
-namespace Jgs.Errors;
+﻿namespace Jgs.Errors;
 
 public class Error : ValueObject
 {

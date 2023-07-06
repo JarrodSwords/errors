@@ -1,7 +1,4 @@
-﻿using FluentAssertions.Execution;
-using Jgs.Errors.Results;
-
-namespace Jgs.Errors.Spec.Results;
+﻿namespace Jgs.Errors.Spec.Results;
 
 public class WhenInstantiating
 {
@@ -23,7 +20,7 @@ public class WhenInstantiating
     [Fact]
     public void ThenReturnSuccess()
     {
-        var result = Result.Success();
+        var result = Success();
 
         result.IsSuccess.Should().BeTrue();
         result.IsFailure.Should().BeFalse();

@@ -1,7 +1,4 @@
-﻿using FluentAssertions.Execution;
-using Jgs.Errors.Results;
-
-namespace Jgs.Errors.Spec.Results;
+﻿namespace Jgs.Errors.Spec.Results;
 
 public class WhenInstantiatingGeneric
 {

@@ -1,7 +1,4 @@
-﻿using Jgs.Errors.Results;
-using static Jgs.Errors.Results.Result;
-
-namespace Jgs.Errors.Spec.Results;
+﻿namespace Jgs.Errors.Spec.Results;
 
 public class OnSuccess
 {

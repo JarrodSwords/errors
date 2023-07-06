@@ -1,6 +1,4 @@
-﻿using Jgs.Errors.Results;
-
-namespace Jgs.Errors.Spec.Results;
+﻿namespace Jgs.Errors.Spec.Results;
 
 public class WhenCastingToError
 {
@@ -11,7 +9,7 @@ public class WhenCastingToError
     {
         var error = new Error("foo");
 
-        var result = Result.Failure<int>(error);
+        var result = Failure<int>(error);
 
         ((Error) result).Should().Be(error);
     }
@@ -21,7 +19,7 @@ public class WhenCastingToError
     {
         var error = new Error("foo");
 
-        var result = Result.Failure(error);
+        var result = Failure(error);
 
         ((Error) result).Should().Be(error);
     }

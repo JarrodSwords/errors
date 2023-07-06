@@ -1,6 +1,4 @@
-﻿using FluentAssertions.Execution;
-
-namespace Jgs.Errors.Spec.Errors;
+﻿namespace Jgs.Errors.Spec.Errors;
 
 public class WhenInstantiating
 {
