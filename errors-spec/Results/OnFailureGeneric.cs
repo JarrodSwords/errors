@@ -3,7 +3,7 @@ using static Jgs.Errors.Results.Result;
 
 namespace Jgs.Errors.Spec.Results;
 
-public class WhenBindingGeneric
+public class OnFailureGeneric
 {
     #region Implementation
 
@@ -19,22 +19,22 @@ public class WhenBindingGeneric
 
     [Theory]
     [MemberData(nameof(GetResults))]
-    public void AfterFailure_ThenBypassNextOperation(Result nextResult)
+    public void AfterFailure_ThenExecuteNextOperation(Result nextResult)
     {
-        Result<int> originalResult = new Error("foo");
+        var result = Failure<int>(new Error("foo")).OnFailure(() => nextResult);
 
-        var result = originalResult.OnSuccess(() => nextResult);
-
-        result.Should().Be(originalResult);
+        result.Should().Be(nextResult);
     }
 
     [Theory]
     [MemberData(nameof(GetResults))]
-    public void AfterSuccess_ThenExecuteNextOperation(Result nextResult)
+    public void AfterSuccess_ThenBypassNextOperation(Result nextResult)
     {
-        var result = Success(5).OnSuccess(() => nextResult);
+        var originalResult = Success(5);
 
-        result.Should().Be(nextResult);
+        var result = originalResult.OnFailure(() => nextResult);
+
+        result.Should().Be(originalResult);
     }
 
     #endregion

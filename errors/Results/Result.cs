@@ -18,13 +18,15 @@ public class Result
     public bool IsSuccess => Error is null;
 
     public Result Bind(Func<Result> next) => IsSuccess ? next() : this;
-    public Result OnFailure(Func<Result> next) => Bind(next);
+    public Result OnFailure(Func<Result> next) => IsFailure ? next() : this;
     public Result OnSuccess(Func<Result> next) => Bind(next);
 
     #endregion
 
     #region Static Interface
 
+    public static Result Failure(Error error) => new(error);
+    public static Result<T> Failure<T>(Error error) => new(error);
     public static Result Success() => new();
     public static Result<T> Success<T>(T value) => new(value);
 
