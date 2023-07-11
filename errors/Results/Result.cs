@@ -18,7 +18,7 @@ public class Result
     public bool IsSuccess => Error is null;
 
     public Result Bind(Func<Result> next) => IsSuccess ? next() : this;
-    public Result<T> Bind<T>(Func<Result<T>> next) => IsSuccess ? next() : (Result<T>) this;
+    public Result<T> Bind<T>(Func<Result<T>> next) => IsSuccess ? next() : Error!;
     public Result OnFailure(Func<Result> next) => IsFailure ? next() : this;
     public Result OnSuccess(Func<Result> next) => Bind(next);
     public Result<T> OnSuccess<T>(Func<Result<T>> next) => Bind(next);
