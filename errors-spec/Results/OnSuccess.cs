@@ -20,7 +20,7 @@ public class OnSuccess
     {
         Result originalResult = new Error("foo");
 
-        var result = originalResult.OnSuccess(() => nextResult);
+        var result = originalResult.Then(() => nextResult);
 
         result.Should().Be(originalResult);
     }
@@ -29,7 +29,7 @@ public class OnSuccess
     [MemberData(nameof(GetResults))]
     public void AfterSuccess_ThenExecuteNextOperation(Result nextResult)
     {
-        var result = Success().OnSuccess(() => nextResult);
+        var result = Success().Then(() => nextResult);
 
         result.Should().Be(nextResult);
     }

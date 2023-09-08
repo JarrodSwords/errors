@@ -18,7 +18,7 @@ public class OnFailureGeneric
     [MemberData(nameof(GetResults))]
     public void AfterFailure_ThenExecuteNextOperation(Result nextResult)
     {
-        var result = Failure<int>(new Error("foo")).OnFailure(() => nextResult);
+        var result = Failure<int>(new Error("foo")).Catch(error => nextResult);
 
         result.Should().Be(nextResult);
     }
@@ -29,7 +29,7 @@ public class OnFailureGeneric
     {
         var originalResult = Success(5);
 
-        var result = originalResult.OnFailure(() => nextResult);
+        var result = originalResult.Catch(error => nextResult);
 
         result.Should().Be(originalResult);
     }
