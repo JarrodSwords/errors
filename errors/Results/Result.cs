@@ -12,6 +12,7 @@ public class Result
     public bool IsSuccess => Error is null;
 
     public Result Catch(Func<Error, Result> next) => IsFailure ? next(Error!) : this;
+    public Result<T> Catch<T>(Func<Error, Result<T>> next) => IsFailure ? next(Error!) : Error!;
     public Result Then(Func<Result> next) => IsSuccess ? next() : this;
     public Result<T> Then<T>(Func<Result<T>> next) => IsSuccess ? next() : Error!;
 
