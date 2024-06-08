@@ -2,30 +2,19 @@
 
 public class Result
 {
-    #region Creation
-
     public Result(Error? error = default)
     {
         Error = error;
     }
 
-    #endregion
-
-    #region Implementation
-
     public Error? Error { get; }
     public bool IsFailure => !IsSuccess;
     public bool IsSuccess => Error is null;
 
-    public Result Bind(Func<Result> next) => IsSuccess ? next() : this;
-    public Result<T> Bind<T>(Func<Result<T>> next) => IsSuccess ? next() : Error!;
-    public Result OnFailure(Func<Result> next) => IsFailure ? next() : this;
-    public Result OnSuccess(Func<Result> next) => Bind(next);
-    public Result<T> OnSuccess<T>(Func<Result<T>> next) => Bind(next);
-
-    #endregion
-
-    #region Static Interface
+    public Result Catch(Func<Error, Result> next) => IsFailure ? next(Error!) : this;
+    public Result<T> Catch<T>(Func<Error, Result<T>> next) => IsFailure ? next(Error!) : Error!;
+    public Result Then(Func<Result> next) => IsSuccess ? next() : this;
+    public Result<T> Then<T>(Func<Result<T>> next) => IsSuccess ? next() : Error!;
 
     public static Result Failure(Error error) => new(error);
     public static Result<T> Failure<T>(Error error) => new(error);
@@ -34,14 +23,10 @@ public class Result
 
     public static implicit operator Error(Result source) => source.Error;
     public static implicit operator Result(Error error) => new(error);
-
-    #endregion
 }
 
 public class Result<T> : Result
 {
-    #region Creation
-
     public Result(Error error) : base(error)
     {
     }
@@ -51,19 +36,13 @@ public class Result<T> : Result
         Value = value;
     }
 
-    #endregion
-
-    #region Implementation
-
     public T? Value { get; }
 
-    #endregion
-
-    #region Static Interface
+    public Result Then(Func<T, Result> next) => IsSuccess ? next(Value!) : Error!;
+    public Result<T> Then(Func<T, Result<T>> next) => IsSuccess ? next(Value!) : Error!;
+    public Result<TOut> Then<TOut>(Func<T, Result<TOut>> next) => IsSuccess ? next(Value!) : Error!;
 
     public static implicit operator Result<T>(Error error) => new(error);
     public static implicit operator Result<T>(T value) => new(value);
     public static implicit operator T(Result<T> source) => source.Value;
-
-    #endregion
 }
