@@ -34,5 +34,23 @@ public class OnSuccess
         result.Should().Be(nextResult);
     }
 
+    [Fact]
+    public void GivenAction_AfterSuccess_ThenExecuteActionAsMiddleware()
+    {
+        var nextOperationWasCalled = false;
+
+        void Action1(int x)
+        {
+            nextOperationWasCalled = true;
+        }
+
+        var previousResult = Success(10);
+        var result = previousResult.Then(Action1);
+
+        using var scope = new AssertionScope();
+        result.Should().Be(previousResult);
+        nextOperationWasCalled.Should().BeTrue();
+    }
+
     #endregion
 }
