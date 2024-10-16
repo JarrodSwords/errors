@@ -38,6 +38,16 @@ public class Result<T> : Result
 
     public T? Value { get; }
 
+    public Result<T> Then(Action<T> next)
+    {
+        if (IsFailure)
+            return Error!;
+
+        next(Value!);
+
+        return this;
+    }
+
     public Result Then(Func<T, Result> next) => IsSuccess ? next(Value!) : Error!;
     public Result<T> Then(Func<T, Result<T>> next) => IsSuccess ? next(Value!) : Error!;
     public Result<TOut> Then<TOut>(Func<T, Result<TOut>> next) => IsSuccess ? next(Value!) : Error!;
